@@ -1,11 +1,11 @@
 var cacheName = "todo-cache-v3";
 var filesToCache = [
-    "/svelteToDo",
-    "build/bundle.css",
-    "build/bundle.js",
-    "build/bundle.js.map",
-    "index.html",
-    "service-worker.js"
+    "/svelteToDo/",
+    "/build/bundle.css",
+    "/build/bundle.js",
+    "/build/bundle.js.map",
+    "/index.html",
+    "/service-worker.js"
 
 ];
 self.addEventListener("install", function (e) {
