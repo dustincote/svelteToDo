@@ -1,6 +1,6 @@
 var cacheName = "todo-cache-v3";
 var filesToCache = [
-    "/svelteToDo",
+    "/",
     "build/bundle.css",
     "build/bundle.js",
     "build/bundle.js.map",
@@ -31,6 +31,7 @@ self.addEventListener("activate", e => {
 self.addEventListener("fetch", e => {
     e.respondWith(
         (async function () {
+            console.log('e.request for service worker is', e.request)
             const response = await caches.match(e.request);
             return response || fetch(e.request);
         })()
