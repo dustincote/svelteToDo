@@ -8,12 +8,8 @@ var filesToCache = [
     "service-worker.js"
 
 ];
-self.addEventListener("install", function (e) {
-    e.waitUntil(
-        caches.open(cacheName).then(function (cache) {
-            return cache.addAll(filesToCache);
-        })
-    );
+self.addEventListener("install", () => {
+    console.log('service worker installed')
 });
 self.addEventListener("activate", e => {
     e.waitUntil(
@@ -30,10 +26,15 @@ self.addEventListener("activate", e => {
 });
 self.addEventListener("fetch", e => {
     e.respondWith(
-        (async function () {
-            console.log('e.request for service worker is', e.request)
-            const response = await caches.match(e.request);
-            return response || fetch(e.request);
-        })()
+        fetch(e.request)
+            .then( res => {
+                const resClone = res.clone();
+
+                caches.open(cacheName).then( cache => {
+                    cache.put(e.request, resClone);
+                });
+                return res;
+            })
+            .catch( err => caches.match(e.request).then(res => res))
     );
 });
